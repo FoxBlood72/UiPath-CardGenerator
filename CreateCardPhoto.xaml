@@ -3,11 +3,14 @@
     <x:Property Name="CardsPhotoTable" Type="InArgument(sd:DataTable)" />
     <x:Property Name="MagickPath" Type="InArgument(x:String)" />
     <x:Property Name="TemplateCardPath" Type="InArgument(x:String)" />
+    <x:Property Name="OutPath" Type="InArgument(x:String)" />
+    <x:Property Name="OutWord" Type="InArgument(x:String)" />
+    <x:Property Name="OutPDF" Type="InArgument(x:String)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>780,647.2</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>779.2,1220</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>CreateCardPhoto_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -43,10 +46,12 @@
       <x:String>UiPath.Shared.Activities.Business</x:String>
       <x:String>UiPath.Testing.Activities.TestData</x:String>
       <x:String>UiPath.Shared.Activities</x:String>
+      <x:String>UiPath.Word</x:String>
+      <x:String>UiPath.Word.Activities</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="49">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="98">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>System.Private.CoreLib</AssemblyReference>
@@ -95,21 +100,27 @@
       <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
       <AssemblyReference>UiPath.UIAutomationNext.Activities</AssemblyReference>
       <AssemblyReference>UiPath.Word.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Word</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="CreateCardPhoto" sap:VirtualizedContainerService.HintSize="496,582.4" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="CreateCardPhoto" sap:VirtualizedContainerService.HintSize="496,1155.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[CardsPhotoTable]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="433.6,470.4" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+    <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[CardsPhotoTable]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="433.6,1043.2" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
       <ui:ForEachRow.Body>
         <ActivityAction x:TypeArguments="sd:DataRow">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="sd:DataRow" Name="CurrentRow" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="400,353.6" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="400,926.4" sap2010:WorkflowViewState.IdRef="Sequence_2">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="x:String" Name="cardNumber" />
+              <Variable x:TypeArguments="x:String" Name="cardYear" />
+              <Variable x:TypeArguments="x:String" Name="cardMonth" />
+            </Sequence.Variables>
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -117,10 +128,37 @@
             </sap:WorkflowViewStateService.ViewState>
             <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="generateCardNumber.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="337.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="generateCardNumber.xaml">
               <ui:InvokeWorkflowFile.Arguments>
-                <InOutArgument x:TypeArguments="x:String" x:Key="cardNumber" />
+                <OutArgument x:TypeArguments="x:String" x:Key="outCardNumber">
+                  <VisualBasicReference x:TypeArguments="x:String" ExpressionText="cardNumber" />
+                </OutArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
-            <ui:StartProcess WorkingDirectory="{x:Null}" Arguments="[TemplateCardPath &amp; &quot; -font Arial -pointsize 30 -strokewidth 2 -draw &quot;&quot; stroke #000080 fill #000080 text 180,294 '4019 7124 0827 0792' &quot;&quot; -font Arial -pointsize 15 -strokewidth 1 -draw &quot;&quot; stroke #000080 fill #000080 text 347,342 '9/26' &quot;&quot; -font Arial -pointsize 20 -strokewidth 1 -draw &quot;&quot; stroke #000080 fill #000080 text 172,378 'Mihai Gabriel Mihai' &quot;&quot; test.png&quot;]" DisplayName="Start Process" FileName="[MagickPath]" sap:VirtualizedContainerService.HintSize="337.6,88" sap2010:WorkflowViewState.IdRef="StartProcess_1" />
+            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="337.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Trace" Message="[&quot;Urmatorul card urmeaza sa fie generat: &quot; &amp; cardNumber]" />
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="generateExpirationDate.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="337.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="generateExpirationDate.xaml">
+              <ui:InvokeWorkflowFile.Arguments>
+                <OutArgument x:TypeArguments="x:String" x:Key="cardMonth">
+                  <VisualBasicReference x:TypeArguments="x:String" ExpressionText="cardMonth" />
+                </OutArgument>
+                <OutArgument x:TypeArguments="x:String" x:Key="cardYear">
+                  <VisualBasicReference x:TypeArguments="x:String" ExpressionText="cardYear" />
+                </OutArgument>
+              </ui:InvokeWorkflowFile.Arguments>
+            </ui:InvokeWorkflowFile>
+            <ui:StartProcess WorkingDirectory="{x:Null}" Arguments="[TemplateCardPath &amp; &quot; -font Arial -pointsize 30 -strokewidth 2 -draw &quot;&quot; stroke #000080 fill #000080 text 180,294 '&quot; &amp; cardNumber &amp; &quot;' &quot;&quot; -font Arial -pointsize 15 -strokewidth 1 -draw &quot;&quot; stroke #000080 fill #000080 text 347,342 '&quot;&amp; cardMonth &amp; &quot;/&quot; &amp; cardYear &amp; &quot;' &quot;&quot; -font Arial -pointsize 20 -strokewidth 1 -draw &quot;&quot; stroke #000080 fill #000080 text 172,378 '&quot;&amp; CurrentRow(0).ToString &amp; &quot; &quot; &amp; CurrentRow(1).ToString  &amp;&quot;' &quot;&quot; &quot; &amp; OutPath &amp; CurrentRow(2).ToString &amp; &quot;.png&quot;]" DisplayName="Start Process" FileName="[MagickPath]" sap:VirtualizedContainerService.HintSize="337.6,88" sap2010:WorkflowViewState.IdRef="StartProcess_1" />
+            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="337.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[OutPDF &amp; CurrentRow(2).ToString &amp; &quot;.pdf&quot;]" />
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ImageToWordToPDF.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="337.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="ImageToWordToPDF.xaml">
+              <ui:InvokeWorkflowFile.Arguments>
+                <InArgument x:TypeArguments="x:String" x:Key="outWordPath">
+                  <VisualBasicValue x:TypeArguments="x:String" ExpressionText="OutWord &amp; CurrentRow(2).ToString &amp; &quot;.docx&quot;" />
+                </InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="imagePath">
+                  <VisualBasicValue x:TypeArguments="x:String" ExpressionText="OutPath &amp; CurrentRow(2).ToString &amp; &quot;.png&quot;" />
+                </InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="outPathPDF">
+                  <VisualBasicValue x:TypeArguments="x:String" ExpressionText="OutPDF &amp; CurrentRow(2).ToString &amp; &quot;.pdf&quot;" />
+                </InArgument>
+              </ui:InvokeWorkflowFile.Arguments>
+            </ui:InvokeWorkflowFile>
           </Sequence>
         </ActivityAction>
       </ui:ForEachRow.Body>

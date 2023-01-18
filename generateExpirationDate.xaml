@@ -1,12 +1,13 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="generateCardNumber" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:utat="clr-namespace:UiPath.Testing.Activities.TestData;assembly=UiPath.Testing.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="generateDateOfBirth" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:utat="clr-namespace:UiPath.Testing.Activities.TestData;assembly=UiPath.Testing.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="outCardNumber" Type="OutArgument(x:String)" />
+    <x:Property Name="cardYear" Type="OutArgument(x:String)" />
+    <x:Property Name="cardMonth" Type="OutArgument(x:String)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>780,1142.4</sap:VirtualizedContainerService.HintSize>
-  <sap2010:WorkflowViewState.IdRef>generateCardNumber_1</sap2010:WorkflowViewState.IdRef>
+  <sap:VirtualizedContainerService.HintSize>780,1140.8</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>generateDateOfBirth_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>System.Activities</x:String>
@@ -32,16 +33,13 @@
       <x:String>System.Windows.Markup</x:String>
       <x:String>GlobalVariablesNamespace</x:String>
       <x:String>GlobalConstantsNamespace</x:String>
-      <x:String>System.Runtime.Serialization</x:String>
-      <x:String>System.Collections.ObjectModel</x:String>
-      <x:String>UiPath.Shared.Activities.Business</x:String>
-      <x:String>UiPath.Testing.Activities.TestData</x:String>
-      <x:String>UiPath.Shared.Activities</x:String>
       <x:String>System.Reflection</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="60">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="80">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>System.Private.CoreLib</AssemblyReference>
@@ -71,8 +69,6 @@
       <AssemblyReference>System.Reflection.DispatchProxy</AssemblyReference>
       <AssemblyReference>System.Reflection.TypeExtensions</AssemblyReference>
       <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
-      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
-      <AssemblyReference>UiPath.Workflow</AssemblyReference>
       <AssemblyReference>NPOI</AssemblyReference>
       <AssemblyReference>System.Memory.Data</AssemblyReference>
       <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
@@ -82,44 +78,47 @@
       <AssemblyReference>System.ComponentModel</AssemblyReference>
       <AssemblyReference>System.Memory</AssemblyReference>
       <AssemblyReference>System.Private.Uri</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.Workflow</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="generateCardNumber" sap:VirtualizedContainerService.HintSize="496,1077.6" sap2010:WorkflowViewState.IdRef="Sequence_1">
-    <Sequence.Variables>
-      <Variable x:TypeArguments="x:String" Name="cardNumber" />
-    </Sequence.Variables>
+  <Sequence DisplayName="generateDateOfBirth" sap:VirtualizedContainerService.HintSize="496,1076" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:RepeatNumberOfTimesX DisplayName="Repeat Number of Times" sap:VirtualizedContainerService.HintSize="433.6,700" sap2010:WorkflowViewState.IdRef="RepeatNumberOfTimesX_1" NumberOfTimes="4" StartAt="1">
+    <ui:RepeatNumberOfTimesX DisplayName="Repeat Number of Times" sap:VirtualizedContainerService.HintSize="433.6,964" sap2010:WorkflowViewState.IdRef="RepeatNumberOfTimesX_2" NumberOfTimes="1" StartAt="1">
       <ui:RepeatNumberOfTimesX.Body>
         <ActivityAction x:TypeArguments="x:Int32">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="x:Int32" Name="CurrentItem" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="400,540.8" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="400,804.8" sap2010:WorkflowViewState.IdRef="Sequence_3">
             <Sequence.Variables>
-              <Variable x:TypeArguments="x:Decimal" Name="tempNumber" />
-              <Variable x:TypeArguments="x:String" Name="cardNumber" />
+              <Variable x:TypeArguments="x:Decimal" Name="tempMonth" />
+              <Variable x:TypeArguments="x:Decimal" Name="tempYear" />
             </Sequence.Variables>
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <utat:RandomNumber Decimals="{x:Null}" DisplayName="Random Number" sap:VirtualizedContainerService.HintSize="337.6,224" sap2010:WorkflowViewState.IdRef="RandomNumber_1" Max="7777" Min="1000" Output="[tempNumber]" />
-            <ui:InvokeCode ContinueOnError="{x:Null}" Code="outCardNumber = cardNumber &amp; &quot; &quot; &amp; tempNumber.ToString()" DisplayName="Invoke Code" sap:VirtualizedContainerService.HintSize="337.6,164.8" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
+            <utat:RandomNumber Decimals="{x:Null}" DisplayName="Random Number" sap:VirtualizedContainerService.HintSize="337.6,224" sap2010:WorkflowViewState.IdRef="RandomNumber_4" Max="12" Min="1" Output="[tempMonth]" />
+            <utat:RandomNumber Decimals="{x:Null}" DisplayName="Random Number" sap:VirtualizedContainerService.HintSize="337.6,224" sap2010:WorkflowViewState.IdRef="RandomNumber_5" Max="30" Min="23" Output="[tempYear]" />
+            <ui:InvokeCode ContinueOnError="{x:Null}" Code="cardYear = tempYear.ToString&#xD;&#xA;cardMonth = tempMonth.ToString" DisplayName="Invoke Code" sap:VirtualizedContainerService.HintSize="337.6,164.8" sap2010:WorkflowViewState.IdRef="InvokeCode_3">
               <ui:InvokeCode.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="cardNumber">
-                  <VisualBasicValue x:TypeArguments="x:String" ExpressionText="outCardNumber" />
+                <InArgument x:TypeArguments="x:Decimal" x:Key="tempYear">
+                  <VisualBasicValue x:TypeArguments="x:Decimal" ExpressionText="tempYear" />
                 </InArgument>
-                <InArgument x:TypeArguments="x:Decimal" x:Key="tempNumber">
-                  <VisualBasicValue x:TypeArguments="x:Decimal" ExpressionText="tempNumber" />
+                <InArgument x:TypeArguments="x:Decimal" x:Key="tempMonth">
+                  <VisualBasicValue x:TypeArguments="x:Decimal" ExpressionText="tempMonth" />
                 </InArgument>
-                <OutArgument x:TypeArguments="x:String" x:Key="outCardNumber">
-                  <VisualBasicReference x:TypeArguments="x:String" ExpressionText="outCardNumber" />
+                <OutArgument x:TypeArguments="x:String" x:Key="cardMonth">
+                  <VisualBasicReference x:TypeArguments="x:String" ExpressionText="cardMonth" />
+                </OutArgument>
+                <OutArgument x:TypeArguments="x:String" x:Key="cardYear">
+                  <VisualBasicReference x:TypeArguments="x:String" ExpressionText="cardYear" />
                 </OutArgument>
               </ui:InvokeCode.Arguments>
             </ui:InvokeCode>
